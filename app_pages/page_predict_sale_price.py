@@ -38,17 +38,24 @@ def page_predict_sale_price_body():
         "price prediction."
     )
 
-    st.info(
-        "Categorical fields use the original Ames housing dataset codes. "
-        "Each dropdown shows the code followed by its meaning, for example "
-        "`TA — Typical/Average`."
-    )
+    with st.expander("How to use the prediction form", expanded=True):
+        st.markdown(
+            """
+            * Categorical fields use the original Ames housing dataset codes. Each
+            dropdown shows the code followed by its meaning, for example
+            `TA — Typical/Average`.
 
-    st.write(
-        "Numerical fields are pre-filled with median values from the cleaned "
-        "training data. Adjust the values as needed, then submit the form to "
-        "generate a prediction."
-    )
+            * Numerical fields are pre-filled with median values from the cleaned
+            training data. Adjust these values as needed before submitting the form.
+
+            * Input ranges are limited to the values observed in the cleaned training
+            data. This avoids asking the model to predict from values outside the
+            range it learned from.
+
+            * The prediction applies the same feature engineering steps and fitted
+            model created in the project notebooks.
+            """
+        )
 
     st.markdown(
         """

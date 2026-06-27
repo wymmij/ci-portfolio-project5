@@ -233,17 +233,6 @@ def display_prediction_input_widgets():
 
     user_input = {}
 
-    st.write(
-        "Enter house attributes below. The prediction uses the same feature "
-        "engineering steps and fitted model created in the notebooks."
-    )
-
-    st.write(
-        "Input ranges are limited to the values observed in the cleaned training data. "
-        "This avoids asking the model to make predictions for values outside the range "
-        "it learned from."
-    )
-
     with st.expander("Quality and condition", expanded=True):
         quality_cols = [
             "OverallQual",
