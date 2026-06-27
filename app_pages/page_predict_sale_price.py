@@ -38,9 +38,38 @@ def page_predict_sale_price_body():
         "price prediction."
     )
 
-    input_df = display_prediction_input_widgets()
+    st.info(
+        "Categorical fields use the original Ames housing dataset codes. "
+        "Each dropdown shows the code followed by its meaning, for example "
+        "`TA — Typical/Average`."
+    )
 
-    if st.button("Predict Sale Price"):
+    st.write(
+        "Numerical fields are pre-filled with median values from the cleaned "
+        "training data. Adjust the values as needed, then submit the form to "
+        "generate a prediction."
+    )
+
+    st.markdown(
+        """
+        <style>
+        div[data-testid="stForm"] {
+            max-width: 750px;
+        }
+        </style>
+        """,
+        unsafe_allow_html=True
+    )
+
+    with st.form("sale_price_prediction_form"):
+        input_df = display_prediction_input_widgets()
+
+        submitted = st.form_submit_button(
+            "Predict Sale Price",
+            use_container_width=True
+        )
+
+    if submitted:
         prediction = predict_sale_price(input_df)[0]
 
         st.success(f"Predicted sale price: ${prediction:,.2f}")
