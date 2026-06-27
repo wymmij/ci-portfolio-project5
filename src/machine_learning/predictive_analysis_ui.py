@@ -7,6 +7,7 @@ from src.data_management import (
     load_feature_engineering_artifacts,
     load_regression_pipeline,
 )
+from typing import Any
 
 
 FEATURE_LABELS = {
@@ -108,21 +109,21 @@ CATEGORY_ORDERS = {
 }
 
 
-def get_feature_label(col):
+def get_feature_label(col: str) -> str:
     """
     Return a human-readable label for a feature.
     """
     return FEATURE_LABELS.get(col, col)
 
 
-def get_feature_help(col):
+def get_feature_help(col: str) -> str | None:
     """
     Return help text for a feature widget.
     """
-    return FEATURE_HELP.get(col, None)
+    return FEATURE_HELP.get(col)
 
 
-def format_category_option(col, value):
+def format_category_option(col: str, value: str) -> str:
     """
     Format categorical option labels while preserving the original value.
     """
@@ -132,7 +133,7 @@ def format_category_option(col, value):
     return f"{value} — {value_label}"
 
 
-def get_ordered_category_options(col, values):
+def get_ordered_category_options(col: str, values) -> list[str]:
     """
     Return category options in a meaningful ordinal order where available.
     """
@@ -231,7 +232,7 @@ def display_prediction_input_widgets():
     categorical_cols = feature_df.select_dtypes(include=["object"]).columns.to_list()
     numerical_cols = feature_df.select_dtypes(include=["number"]).columns.to_list()
 
-    user_input = {}
+    user_input: dict[str, Any] = {}
 
     with st.expander("Quality and condition", expanded=True):
         quality_cols = [
