@@ -7,6 +7,7 @@ from src.data_management import (
     load_model_comparison,
     load_model_performance,
 )
+from src.feature_metadata import create_feature_glossary, get_feature_label
 
 
 def page_ml_performance_body():
@@ -71,7 +72,14 @@ def page_ml_performance_body():
 
     feature_importance_df = load_feature_importance()
 
-    st.dataframe(feature_importance_df.head(15))
+    feature_importance_display = feature_importance_df.head(15).copy()
+    feature_importance_display.insert(
+        1,
+        "Meaning",
+        feature_importance_display["Feature"].apply(get_feature_label)
+    )
+
+    st.dataframe(feature_importance_display)
 
     feature_importance_plot = PIPELINE_DIR / "feature_importance.png"
 

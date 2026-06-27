@@ -5,6 +5,7 @@ from src.machine_learning.predictive_analysis_ui import (
     display_prediction_input_widgets,
     predict_sale_price,
 )
+from src.feature_metadata import create_feature_glossary
 
 
 def page_predict_sale_price_body():
@@ -23,6 +24,14 @@ def page_predict_sale_price_body():
     )
 
     st.dataframe(inherited_predictions_df)
+
+    with st.expander("Feature meanings in the inherited houses table", expanded=False):
+        table_features = [
+            col for col in inherited_predictions_df.columns
+            if col != "PredictedSalePrice"
+        ]
+
+        st.dataframe(create_feature_glossary(table_features))
 
     total_value = inherited_predictions_df["PredictedSalePrice"].sum()
 

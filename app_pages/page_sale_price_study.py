@@ -5,6 +5,7 @@ from src.data_management import (
     load_house_prices_records,
     load_saleprice_correlation_summary,
 )
+from src.feature_metadata import create_feature_glossary, format_feature_label, get_feature_label
 
 
 def page_sale_price_study_body():
@@ -25,17 +26,29 @@ def page_sale_price_study_body():
 
     top_corr = corr_df.sort_values(by="spearman_abs", ascending=False).head(10)
 
-    st.dataframe(top_corr)
+    top_corr_display = top_corr.reset_index().rename(columns={"index": "Feature"})
+    top_corr_display.insert(
+        1,
+        "Meaning",
+        top_corr_display["Feature"].apply(get_feature_label)
+    )
+
+    st.dataframe(top_corr_display)
+
+    top_corr_plot = top_corr.reset_index().rename(columns={"index": "Feature"})
+    top_corr_plot["FeatureLabel"] = top_corr_plot["Feature"].apply(
+        lambda feature: f"{get_feature_label(feature)} ({feature})"
+    )
 
     fig = px.bar(
-        top_corr.reset_index(),
+        top_corr_plot,
         x="spearman_abs",
-        y="index",
+        y="FeatureLabel",
         orientation="h",
         title="Top Features by Absolute Spearman Correlation with SalePrice",
         labels={
             "spearman_abs": "Absolute Spearman correlation",
-            "index": "Feature"
+            "FeatureLabel": "Feature"
         }
     )
 
@@ -72,6 +85,7 @@ def page_sale_price_study_body():
     st.plotly_chart(fig, use_container_width=True)
 
     st.success(
-        "The strongest relationships found in the study were overall quality, "
-        "living area, construction year, garage area, and basement area."
+        "The strongest relationships found in the study were **overall quality** "
+        "(`OverallQual`), **above-ground living area** (`GrLivArea`), **construction year** "
+        "(`YearBuilt`), **garage area** (`GarageArea`), and **basement area** (`TotalBsmtSF`)."
     )
