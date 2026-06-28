@@ -6,7 +6,7 @@ The project uses the Ames, Iowa housing dataset to investigate which house attri
 
 The dashboard was built for a fictional client, Lydia, who has inherited four houses in Ames, Iowa. Lydia does not know the Ames housing market and wants data-driven support before deciding how to value the inherited properties.
 
-[View the live app](https://wymmij-heritage-housing-issues.herokuapp.com/)
+[View the live app](https://wymmij-heritage-housing-issues-4e260e88ecde.herokuapp.com/)
 
 [View the GitHub repository](https://github.com/wymmij/ci-portfolio-project5)
 
