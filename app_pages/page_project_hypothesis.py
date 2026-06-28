@@ -45,7 +45,7 @@ def page_project_hypothesis_body():
 
     st.dataframe(validation_df)
 
-    st.write(
+    st.success(
         "The Sale Price Study supports the hypothesis. Overall quality "
         "(`OverallQual`), above-ground living area (`GrLivArea`), and construction "
         "year (`YearBuilt`) were among the strongest positive correlations with "
