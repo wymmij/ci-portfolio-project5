@@ -5,7 +5,7 @@ from src.machine_learning.predictive_analysis_ui import (
     display_prediction_input_widgets,
     predict_sale_price,
 )
-from src.feature_metadata import create_feature_glossary
+from src.feature_metadata import get_feature_label
 
 
 def page_predict_sale_price_body():
@@ -23,15 +23,34 @@ def page_predict_sale_price_body():
         "houses using the final fitted regression model."
     )
 
-    st.dataframe(inherited_predictions_df)
+    inherited_display_df = inherited_predictions_df.copy()
 
-    with st.expander("Feature meanings in the inherited houses table", expanded=False):
-        table_features = [
-            col for col in inherited_predictions_df.columns
-            if col != "PredictedSalePrice"
-        ]
+    inherited_display_df["PredictedSalePrice"] = inherited_display_df[
+        "PredictedSalePrice"
+    ].apply(lambda value: f"${value:,.2f}")
 
-        st.dataframe(create_feature_glossary(table_features))
+    inherited_display_df.index = [
+        f"House {house_number}"
+        for house_number in range(1, len(inherited_display_df) + 1)
+    ]
+
+    inherited_display_df = inherited_display_df.T.reset_index()
+    inherited_display_df = inherited_display_df.rename(columns={"index": "Feature"})
+
+    inherited_display_df.insert(
+        1,
+        "Meaning",
+        inherited_display_df["Feature"].apply(get_feature_label)
+    )
+
+    house_columns = [
+        col for col in inherited_display_df.columns
+        if col not in ["Feature", "Meaning"]
+    ]
+
+    inherited_display_df[house_columns] = inherited_display_df[house_columns].astype(str)
+
+    st.dataframe(inherited_display_df, hide_index=True)
 
     total_value = inherited_predictions_df["PredictedSalePrice"].sum()
 
