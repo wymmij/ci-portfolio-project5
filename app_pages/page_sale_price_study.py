@@ -5,7 +5,7 @@ from src.data_management import (
     load_house_prices_records,
     load_saleprice_correlation_summary,
 )
-from src.feature_metadata import create_feature_glossary, format_feature_label, get_feature_label
+from src.feature_metadata import get_feature_label
 
 
 def page_sale_price_study_body():

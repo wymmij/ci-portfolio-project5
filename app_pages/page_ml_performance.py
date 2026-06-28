@@ -7,7 +7,7 @@ from src.data_management import (
     load_model_comparison,
     load_model_performance,
 )
-from src.feature_metadata import create_feature_glossary, get_feature_label
+from src.feature_metadata import get_feature_label
 
 
 def page_ml_performance_body():

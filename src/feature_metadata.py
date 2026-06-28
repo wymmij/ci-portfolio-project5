@@ -1,6 +1,3 @@
-import pandas as pd
-
-
 FEATURE_LABELS = {
     "OverallQual": "Overall material and finish quality",
     "OverallCond": "Overall house condition",
@@ -28,6 +25,7 @@ FEATURE_LABELS = {
     "HouseAge": "House age",
     "RemodAge": "Remodelling age",
     "GarageAge": "Garage age",
+    "PredictedSalePrice": "Predicted sale price",
 }
 
 
@@ -123,18 +121,6 @@ def get_feature_help(feature: str) -> str | None:
     return FEATURE_HELP.get(feature)
 
 
-def format_feature_label(feature: str) -> str:
-    """
-    Return a readable feature label with the original dataset code.
-    """
-    label = get_feature_label(feature)
-
-    if label == feature:
-        return feature
-
-    return f"{label} (`{feature}`)"
-
-
 def format_category_option(feature: str, value: str) -> str:
     """
     Format categorical option labels while preserving the original value.
@@ -165,13 +151,3 @@ def get_ordered_category_options(feature: str, values) -> list[str]:
     ])
 
     return ordered_values + remaining_values
-
-
-def create_feature_glossary(features: list[str]) -> pd.DataFrame:
-    """
-    Create a glossary dataframe for selected features.
-    """
-    return pd.DataFrame({
-        "Feature": features,
-        "Meaning": [get_feature_label(feature) for feature in features],
-    })
