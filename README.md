@@ -252,3 +252,141 @@ It includes:
 * the final test-set R² score;
 * actual-vs-predicted plots for train and test sets;
 * feature importance table and chart.
+
+---
+
+## Testing
+
+Testing was carried out throughout the project while developing the notebooks, machine learning pipeline, and Streamlit dashboard.
+
+### Notebook Testing
+
+Each notebook was run from top to bottom after development.
+
+| Notebook                           | Test                                                                                                                                               | Result |
+| ---------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------- | ------ |
+| `01 DataCollection.ipynb`          | Downloaded the Kaggle dataset and saved project copies of the raw CSV files                                                                        | Pass   |
+| `02 SalePrice Study.ipynb`         | Loaded collected data, created correlation analysis, and saved correlation summary files                                                           | Pass   |
+| `03 DataCleaning.ipynb`            | Loaded collected datasets, investigated missing values, cleaned data, and saved cleaned train/test/inherited datasets                              | Pass   |
+| `04 FeatureEngineering.ipynb`      | Loaded cleaned datasets, encoded categorical variables, created engineered features, and saved featured datasets and feature-engineering artifacts | Pass   |
+| `05 Modeling and Evaluation.ipynb` | Trained and evaluated regression models, saved final model and performance artifacts, and predicted inherited house prices                         | Pass   |
+
+### Data Cleaning Testing
+
+The data cleaning process checked:
+
+* duplicated rows;
+* missing values before and after cleaning;
+* whether missing values represented structural absence or unknown values;
+* remaining missing values after imputation;
+* train/test/inherited dataset shape consistency.
+
+Final checks confirmed that no missing values remained in the cleaned datasets.
+
+### Feature Engineering Testing
+
+Feature engineering checks confirmed that:
+
+* categorical variables were encoded successfully;
+* no categorical values failed mapping;
+* no missing values remained after feature engineering;
+* all final model input columns were numerical;
+* train, test, and inherited datasets used the same selected feature set.
+
+### Model Testing
+
+Several regression models were compared before selecting the final model.
+
+The final model was evaluated using:
+
+* R²;
+* Mean Absolute Error;
+* Root Mean Squared Error;
+* actual-vs-predicted plots for train and test sets;
+* feature importance.
+
+The final Gradient Boosting model achieved:
+
+| Dataset | R²    |
+| ------- | ----- |
+| Train   | 0.965 |
+| Test    | 0.880 |
+
+The model met the project success threshold of test R² >= 0.75.
+
+The saved model was reloaded and tested in the modelling notebook to confirm that it could be used after serialisation.
+
+### Streamlit App Testing
+
+The Streamlit app was tested locally using:
+
+```bash
+streamlit run app.py
+```
+
+The following dashboard pages were checked manually:
+
+| Page               | Test                                                                                          | Result |
+| ------------------ | --------------------------------------------------------------------------------------------- | ------ |
+| Project Summary    | Page loads and shows business requirements and page descriptions                              | Pass   |
+| Sale Price Study   | Page loads correlation table, feature meanings, and charts                                    | Pass   |
+| Project Hypothesis | Page loads hypothesis, validation table, and conclusion                                       | Pass   |
+| Predict Sale Price | Page loads inherited house predictions and custom prediction form                             | Pass   |
+| Predict Sale Price | Custom form submits successfully and returns a sale price prediction                          | Pass   |
+| ML Performance     | Page loads model comparison, final metrics, actual-vs-predicted plots, and feature importance | Pass   |
+
+### Code Validation
+
+Python files were checked using:
+
+```bash
+python -m compileall app.py app_pages src
+```
+
+The command completed successfully.
+
+### Browser and Responsiveness Testing
+
+The dashboard was tested locally in a desktop browser.
+
+The prediction form was adjusted so that it has a maximum width on wide screens while still adapting to narrower screens. This improved readability without making the form unnecessarily cramped.
+
+---
+
+## Bugs
+
+### Fixed Bugs
+
+#### Pandas reading `"None"` as missing data
+
+The cleaned datasets use the string `"None"` to represent structural absence, such as no basement or no garage.
+
+When the cleaned CSV files were loaded again, pandas interpreted `"None"` as a missing value. This caused issues during categorical encoding.
+
+The issue was fixed by loading the cleaned CSV files with:
+
+```python
+pd.read_csv(file_path, keep_default_na=False)
+```
+
+#### Incorrect assumption about missing categorical values
+
+Initial cleaning logic assumed that missing values in garage and basement category columns always meant no garage or no basement.
+
+Further investigation showed this was not always true. Some missing `GarageFinish` values occurred where `GarageArea` was greater than 0, meaning the house appeared to have a garage but the finish value was unknown.
+
+The cleaning strategy was updated to separate:
+
+* structural absence;
+* unknown categorical values;
+* unknown numerical values.
+
+#### Arrow warning in inherited houses display table
+
+After transposing the inherited houses predictions table, Streamlit produced an Arrow serialisation warning because table columns contained mixed numeric and string values.
+
+The issue was fixed by formatting the transposed display table as strings for presentation only.
+
+### Unfixed Bugs
+
+There are no known unfixed bugs.
