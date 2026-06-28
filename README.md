@@ -390,3 +390,150 @@ The issue was fixed by formatting the transposed display table as strings for pr
 ### Unfixed Bugs
 
 There are no known unfixed bugs.
+
+---
+
+## Deployment
+
+The project is designed to be deployed to Heroku.
+
+The repository contains the files required for Heroku deployment:
+
+| File               | Purpose                                                 |
+| ------------------ | ------------------------------------------------------- |
+| `Procfile`         | Tells Heroku how to run the Streamlit app               |
+| `setup.sh`         | Creates Streamlit server configuration for Heroku       |
+| `requirements.txt` | Lists Python dependencies                               |
+| `runtime.txt`      | Specifies the Python runtime required by the assessment |
+| `.python-version`  | Specifies the Python version used locally               |
+
+### Local Deployment
+
+To run the project locally:
+
+1. Clone the repository:
+
+```bash
+git clone https://github.com/wymmij/heritage-housing-issues
+````
+
+2. Change into the project directory:
+
+```bash
+cd heritage-house-issues
+```
+
+3. Create and activate a virtual environment:
+
+```bash
+python -m venv .venv
+source .venv/bin/activate
+```
+
+4. Install requirements:
+
+```bash
+python -m pip install -r requirements.txt
+```
+
+5. Run the Streamlit app:
+
+```bash
+streamlit run app.py
+```
+
+### Heroku Deployment Steps
+
+The app can be deployed to Heroku using the following process:
+
+1. Create a new Heroku app.
+2. Connect the Heroku app to the GitHub repository.
+3. Ensure the deployment branch is selected.
+4. Deploy the branch manually or enable automatic deployment.
+5. Open the deployed app from the Heroku dashboard.
+
+### Deployment Files
+
+The `Procfile` contains:
+
+```text
+web: sh setup.sh && streamlit run app.py
+```
+
+The `setup.sh` file creates the Streamlit configuration needed for Heroku.
+
+The project uses Python 3.12.
+
+---
+
+## Main Data Analysis and Machine Learning Libraries
+
+The project uses the following main libraries:
+
+| Library      | Purpose                                                              |
+| ------------ | -------------------------------------------------------------------- |
+| pandas       | Data loading, cleaning, analysis, and dataframe handling             |
+| numpy        | Numerical operations                                                 |
+| matplotlib   | Static visualisations in notebooks                                   |
+| seaborn      | Statistical visualisations in notebooks                              |
+| plotly       | Interactive dashboard charts                                         |
+| scikit-learn | Machine learning models, model evaluation, and hyperparameter tuning |
+| joblib       | Saving and loading fitted models and project artifacts               |
+| Streamlit    | Interactive dashboard application                                    |
+
+---
+
+## Project Files
+
+The main project files and folders are:
+
+| Path                                             | Purpose                                                                      |
+| ------------------------------------------------ | ---------------------------------------------------------------------------- |
+| `app.py`                                         | Main Streamlit app entry point                                               |
+| `app_pages/`                                     | Streamlit dashboard page modules                                             |
+| `src/`                                           | Reusable project code                                                        |
+| `src/data_management.py`                         | Data and model artifact loading functions                                    |
+| `src/feature_metadata.py`                        | Feature labels, help text, and category metadata                             |
+| `src/machine_learning/predictive_analysis_ui.py` | Prediction form and prediction-preparation logic                             |
+| `jupyter_notebooks/`                             | Project notebooks                                                            |
+| `outputs/datasets/collection/`                   | Collected project datasets                                                   |
+| `outputs/datasets/cleaned/`                      | Cleaned train, test, and inherited-house datasets                            |
+| `outputs/datasets/featured/`                     | Feature-engineered datasets                                                  |
+| `outputs/ml_pipeline/predict_sale_price/v1/`     | Saved model, model performance, feature importance, and prediction artifacts |
+
+---
+
+## Credits
+
+### Dataset
+
+The dataset was provided by Code Institute through the Heritage Housing Issues project dataset on Kaggle.
+
+### Code and Project Structure
+
+This project was built as part of the Code Institute Full Stack Software Development Diploma.
+
+The project structure, Streamlit dashboard approach, notebook workflow, and machine learning project expectations were informed by Code Institute course materials and walkthrough projects.
+
+### Documentation and Learning Resources
+
+The following resources were used during development:
+
+* Code Institute course materials;
+* Code Institute Heritage Housing Issues project brief and dataset;
+* Code Institute walkthrough project materials;
+* scikit-learn documentation;
+* Streamlit documentation;
+* pandas documentation;
+* Plotly documentation;
+* Heroku deployment documentation.
+
+### AI Assistance
+
+AI assistance was used during project development for explanation, code review, and refactoring suggestions.
+
+---
+
+## Acknowledgements
+
+Thank you to Code Institute for the project brief, learning materials, and assessment structure.
