@@ -8,7 +8,7 @@ The dashboard was built for a fictional client, Lydia, who has inherited four ho
 
 [View the live app](https://wymmij-heritage-housing-issues.herokuapp.com/)
 
-[View the GitHub repository](https://github.com/wymmij/heritage-housing-issues)
+[View the GitHub repository](https://github.com/wymmij/ci-portfolio-project5)
 
 ---
 
@@ -414,13 +414,13 @@ To run the project locally:
 1. Clone the repository:
 
 ```bash
-git clone https://github.com/wymmij/heritage-housing-issues
+git clone https://github.com/wymmij/ci-portfolio-project5
 ````
 
 2. Change into the project directory:
 
 ```bash
-cd heritage-house-issues
+cd ci-portfolio-project5
 ```
 
 3. Create and activate a virtual environment:
