@@ -1,22 +1,31 @@
 # Heritage Housing Issues
 
-Heritage Housing Issues is a Predictive Analytics project that uses data from the Ames, Iowa housing market to help a fictional client estimate the likely sale price of inherited properties.
+Heritage Housing Issues is a predictive analytics dashboard built with Streamlit.
 
-The project includes data analysis, data visualisation, and a supervised machine learning regression model deployed in a Streamlit dashboard.
+The project uses the Ames, Iowa housing dataset to investigate which house attributes are most associated with sale price and to predict sale prices for four inherited houses.
 
-[Live App](https://YOUR_APP_NAME.herokuapp.com/)
+The dashboard was built for a fictional client, Lydia, who has inherited four houses in Ames, Iowa. Lydia does not know the Ames housing market and wants data-driven support before deciding how to value the inherited properties.
 
-[GitHub Repository](https://github.com/YOUR_USERNAME/YOUR_REPOSITORY_NAME)
+[View the live app](https://wymmij-heritage-housing-issues.herokuapp.com/)
+
+[View the GitHub repository](https://github.com/wymmij/heritage-housing-issues)
 
 ---
 
 ## Dataset Content
 
-The dataset is sourced from [Kaggle](https://www.kaggle.com/codeinstitute/housing-prices-data). A fictional user story has been created to show how predictive analytics can be applied in a real business context.
+The dataset is sourced from the Code Institute Heritage Housing Issues project dataset on Kaggle.
 
-The dataset contains almost 1.5 thousand housing records from Ames, Iowa. Each row represents one house sale. The columns describe house attributes such as floor area, basement features, garage features, kitchen quality, lot size, porch area, year built, and sale price.
+The dataset contains housing records from Ames, Iowa. Each record describes property attributes such as living area, basement area, garage size, kitchen quality, lot size, construction year, remodelling year, porch area, and sale price.
+
+The project uses two source datasets:
+
+* `house_prices_records.csv`: historical house sale records, including `SalePrice`;
+* `inherited_houses.csv`: four inherited houses requiring sale price predictions.
 
 The target variable for the machine learning task is `SalePrice`.
+
+A full feature table is included below to explain the dataset variables and category codes.
 
 | Variable      | Meaning                                     | Units / Values                     |
 | ------------- | ------------------------------------------- | ---------------------------------- |
@@ -49,258 +58,197 @@ The target variable for the machine learning task is `SalePrice`.
 
 ## Business Requirements
 
-Lydia Doe has inherited four houses in Ames, Iowa. She has a good understanding of property prices in her own country, but she is unfamiliar with the local housing market in Ames. She wants to avoid inaccurate price estimates before deciding how to sell the inherited houses.
+The client has two business requirements.
 
-The project has two business requirements:
+### Business Requirement 1
 
-1. The client is interested in discovering how house attributes correlate with sale price. Therefore, the client expects data visualisations of the most relevant variables against sale price.
+The client wants to understand which house attributes are most strongly associated with sale price in Ames, Iowa.
 
-2. The client is interested in predicting the sale price of her four inherited houses and any other house in Ames, Iowa.
+This is answered through exploratory data analysis, correlation analysis, and dashboard visualisations showing the strongest relationships between house attributes and `SalePrice`.
+
+### Business Requirement 2
+
+The client wants to predict the sale price of four inherited houses and any other Ames house with similar attribute data.
+
+This is answered through a supervised regression model embedded in the Streamlit dashboard.
 
 ---
 
-## Hypothesis and How to Validate
+## Project Hypothesis and Validation
 
-### Hypothesis 1
+### Hypothesis
 
-Houses with higher overall quality and larger above-grade living area tend to have higher sale prices.
+Houses with higher overall quality `OverallQual`, larger above-ground living area `GrLivArea`, and newer construction dates `YearBuilt` tend to have higher sale prices.
 
 ### Validation Method
 
-This hypothesis will be validated by:
+The hypothesis was validated through the Sale Price Study notebook and dashboard page.
 
-* calculating correlation values between `SalePrice` and numerical house attributes;
-* visualising the relationship between `SalePrice`, `OverallQual`, and `GrLivArea`;
-* reviewing whether the strongest correlations and plots support the hypothesis.
+The validation process used:
 
-### Conclusion
+* Pearson correlation;
+* Spearman correlation;
+* box plots;
+* scatter plots;
+* feature importance from the final regression model.
 
-This section will be completed after the data analysis notebooks have been run.
+### Hypothesis Result
+
+The hypothesis was supported.
+
+The strongest positive relationships with `SalePrice` included:
+
+* overall quality `OverallQual`;
+* above-ground living area `GrLivArea`;
+* construction year `YearBuilt`;
+* garage area `GarageArea`;
+* total basement area `TotalBsmtSF`.
+
+The analysis does not prove causation. It shows that these attributes are meaningfully associated with sale price in this dataset.
 
 ---
 
-## The Rationale to Map the Business Requirements to the Data Visualisations and ML Tasks
+## Rationale: Mapping Business Requirements to Data Visualisations and ML Tasks
 
 ### Business Requirement 1: Sale Price Study
 
-The first business requirement will be answered through data analysis and data visualisation.
+To answer the first business requirement, the project uses data analysis and visualisation.
 
-The project will:
+The Sale Price Study investigates correlations between house attributes and `SalePrice`. It identifies the features most strongly associated with sale price and visualises the most important relationships.
 
-* inspect the housing dataset;
-* identify the variables most strongly related to `SalePrice`;
-* use correlation analysis and visual plots to study relationships between house attributes and sale price;
-* display the most useful findings in the Streamlit dashboard.
+Dashboard evidence:
+
+* top correlated features table;
+* bar chart of strongest Spearman correlations;
+* box plot of `SalePrice` by `OverallQual`;
+* scatter plot of `SalePrice` by `GrLivArea`;
+* scatter plot of `SalePrice` by `YearBuilt`.
 
 ### Business Requirement 2: Sale Price Prediction
 
-The second business requirement will be answered through a supervised machine learning regression task.
+To answer the second business requirement, the project uses a supervised machine learning regression model.
 
-The project will:
+The model predicts `SalePrice` from house attributes. The final fitted model is used in the dashboard to:
 
-* train a regression model using historical Ames housing data;
-* evaluate the model using R² score and actual-vs-predicted plots;
-* save the trained machine learning pipeline;
-* use the saved pipeline in the Streamlit dashboard to predict sale prices for Lydia’s inherited houses and user-provided house profiles.
+* predict sale prices for Lydia's four inherited houses;
+* calculate the total predicted value of the inherited houses;
+* allow the user to enter custom house attributes and generate a sale price prediction.
 
 ---
 
 ## ML Business Case
 
-### Predict Sale Price
+### Objective
 
-The project includes one machine learning task: predicting house sale price.
+The objective is to build a regression model that predicts house sale price from property attributes.
 
-* **ML task:** Regression
-* **Learning method:** Supervised learning
-* **Target variable:** `SalePrice`
-* **Model output:** Predicted sale price in US dollars
-* **Training data:** Historical house sale records from Ames, Iowa
-* **Business use:** The prediction helps Lydia estimate the likely sale value of inherited houses and other Ames properties.
+### ML Task
 
-### Success Metrics
+This is a supervised regression task.
 
-The model will be evaluated using R² score on the train and test sets.
+### Target Variable
 
-The model will be considered successful if:
+The target variable is:
 
-* the test set R² score is at least 0.75;
-* the train and test scores do not suggest severe overfitting;
-* the dashboard can use the saved pipeline to return sale price predictions.
+* `SalePrice`
 
-### Failure Conditions
+### Model Inputs
 
-The model will be considered unsuccessful if:
+The model uses numerical and ordinal-encoded property attributes, including:
 
-* the test set R² score is below 0.75;
-* the model performs well on the train set but poorly on the test set;
-* the saved pipeline cannot be used reliably in the deployed dashboard.
+* quality and condition ratings;
+* living area;
+* basement area;
+* garage area;
+* lot area;
+* porch and deck area;
+* construction and remodelling age features.
 
-### Heuristics
+### Model Output
 
-Without a machine learning model, the client has no data-driven method to estimate sale price for inherited houses in Ames, Iowa.
+The model outputs a predicted house sale price in US dollars.
+
+### Success Metric
+
+The main success metric is R² on the test set.
+
+The model is considered successful if it achieves:
+
+* test set R² >= 0.75
+
+Additional metrics used for evaluation are:
+
+* Mean Absolute Error;
+* Root Mean Squared Error.
+
+### Model Selection
+
+Several regression models were compared:
+
+* Linear Regression;
+* Decision Tree Regressor;
+* Random Forest Regressor;
+* Extra Trees Regressor;
+* Gradient Boosting Regressor.
+
+Gradient Boosting was selected as the final model because it gave the strongest test-set performance and a better train/test balance than the more heavily overfitted tree ensemble alternatives.
+
+The final Gradient Boosting model achieved:
+
+* Train R²: 0.965
+* Test R²: 0.880
+
+The final model therefore met the success threshold of test R² >= 0.75.
 
 ---
 
 ## Dashboard Design
 
-The Streamlit dashboard will contain five pages.
+The Streamlit dashboard contains five pages.
 
 ### Page 1: Project Summary
 
-This page will include:
+This page introduces the project, the dataset, the client problem, and the two business requirements.
 
-* a summary of the client situation;
-* a description of the dataset;
-* the two business requirements;
-* an explanation of the dashboard pages.
+It helps the user understand the purpose of the dashboard before exploring the analysis or prediction tools.
 
 ### Page 2: Sale Price Study
 
-This page will answer Business Requirement 1.
+This page answers Business Requirement 1.
 
-It will include:
+It shows:
 
-* a summary of the sale price study;
-* visualisations showing the strongest relationships between house attributes and `SalePrice`;
-* written interpretations of each plot or group of plots;
-* conclusions about which house attributes appear most relevant to sale price.
+* the top features correlated with `SalePrice`;
+* feature meanings for abbreviation-heavy variables;
+* a bar chart of the strongest correlations;
+* visualisations of key relationships between sale price and important house attributes.
 
-### Page 3: Project Hypothesis and Validation
+### Page 3: Project Hypothesis
 
-This page will include:
+This page states the project hypothesis and explains how it was validated.
 
-* the project hypothesis;
-* the validation method;
-* the final conclusion after the data analysis has been completed.
+It shows the correlation evidence for the hypothesis features and states whether the analysis supports the hypothesis.
 
 ### Page 4: Predict Sale Price
 
-This page will answer Business Requirement 2.
+This page answers Business Requirement 2.
 
-It will include:
+It shows:
 
-* prediction results for Lydia’s four inherited houses;
-* total predicted sale value for the inherited properties;
-* input widgets allowing the user to provide house attributes;
-* a button to run the predictive analysis;
-* the predicted sale price for the user-provided house profile.
+* predicted sale prices for Lydia's four inherited houses;
+* the total predicted value of the inherited houses;
+* a custom prediction form where users can enter house attributes and generate a sale price prediction.
+
+The prediction form includes explanations for dataset abbreviations and category codes.
 
 ### Page 5: ML Performance
 
-This page will include:
+This page shows evidence for the final model's performance.
 
-* a summary of the machine learning pipeline;
-* the model performance results;
-* the train and test R² scores;
-* actual-vs-predicted plots;
-* feature importance information, where available;
-* a statement explaining whether the model met the business requirement.
+It includes:
 
----
-
-## Project Structure
-
-```text
-.
-├── app.py
-├── app_pages
-├── inputs
-├── jupyter_notebooks
-├── outputs
-├── src
-├── README.md
-├── requirements.txt
-├── Procfile
-├── runtime.txt
-└── setup.sh
-```
-
----
-
-## Testing
-
-This section will be completed after the project has been implemented.
-
-Testing will include:
-
-* checking that all notebooks run from top to bottom;
-* checking that the Streamlit app runs locally;
-* checking that all dashboard pages load correctly;
-* checking that prediction widgets return a sale price prediction;
-* checking that the deployed Heroku app works as expected.
-
----
-
-## Unfixed Bugs
-
-This section will be completed before submission.
-
-At present, there are no known unfixed bugs.
-
----
-
-## Deployment
-
-### Heroku
-
-The app will be deployed to Heroku.
-
-The live app link is:
-
-https://YOUR_APP_NAME.herokuapp.com/
-
-The project includes the following deployment files:
-
-* `requirements.txt`
-* `Procfile`
-* `runtime.txt`
-* `setup.sh`
-* `.python-version`
-
-Deployment steps:
-
-1. Log in to Heroku.
-2. Create a new Heroku app.
-3. In the Deploy tab, select GitHub as the deployment method.
-4. Connect the GitHub repository.
-5. Select the deployment branch.
-6. Click **Deploy Branch**.
-7. After deployment, click **Open App** to confirm the app is running.
-
----
-
-## Main Data Analysis and Machine Learning Libraries
-
-The main libraries used in this project will include:
-
-* **pandas**: for loading, cleaning, and analysing tabular data.
-* **NumPy**: for numerical operations.
-* **Matplotlib**: for static data visualisations.
-* **Seaborn**: for statistical data visualisations.
-* **Plotly**: for interactive visualisations.
-* **scikit-learn**: for machine learning pipeline creation, model training, and model evaluation.
-* **Feature-engine**: for feature engineering steps.
-* **Streamlit**: for building and deploying the dashboard.
-* **joblib**: for saving and loading the fitted machine learning pipeline.
-
-This section will be updated as the project develops.
-
----
-
-## Credits
-
-### Content
-
-* The dataset was provided by Code Institute through Kaggle: [Housing Prices Data](https://www.kaggle.com/codeinstitute/housing-prices-data).
-* The project structure and assessment expectations are based on Code Institute’s Predictive Analytics project materials.
-* Code Institute walkthrough projects were used as guidance for project structure, dashboard organisation, and README organisation.
-
-### Code
-
-* Code Institute walkthrough project materials were used as structural guidance.
-* Additional code credits will be added here where external documentation, examples, or tutorials are used.
-
-### Acknowledgements
-
-* Code Institute for providing the project brief, assessment materials, and dataset.
+* model comparison results;
+* final model performance metrics;
+* the final test-set R² score;
+* actual-vs-predicted plots for train and test sets;
+* feature importance table and chart.
