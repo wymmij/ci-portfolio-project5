@@ -1,0 +1,7 @@
+# Files not needed by the deployed Streamlit app
+
+jupyter_notebooks/
+inputs/
+*.ipynb_checkpoints/
+__pycache__/
+*.pyc
